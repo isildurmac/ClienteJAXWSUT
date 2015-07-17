@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://serviciosaxis2.ejemplos.blogs.org"
+                  targetNamespace="http://serviciosaxis2.ejemplos.blogs.org"
+                  xmlns:wsp="http://www.w3.org/ns/ws-policy"
+                  xmlns:sc1="http://schemas.sun.com/2006/03/wss/client"
+                  xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy"
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <wsdl:portType name="HolamundoPortType" />
+    <wsdl:binding name="HolamundoSoap12Binding" type="tns:HolamundoPortType">
+        <wsp:PolicyReference URI="#UsersBindingPolicy" />
+    </wsdl:binding>
+    <wsdl:service name="HolamundoWSDL">
+        <wsdl:port name="HolamundoHttpsSoap12Endpoint" binding="tns:HolamundoSoap12Binding" />
+    </wsdl:service>
+    <wsp:Policy wsu:Id="UsersBindingPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sc1:CallbackHandlerConfiguration wspp:visibility="private">
+                    <sc1:CallbackHandler name="usernameHandler" classname="com.chakray.ejemplos.jaxws.metro.MyCallbackHandler"/>
+                    <sc1:CallbackHandler name="passwordHandler" classname="com.chakray.ejemplos.jaxws.metro.MyCallbackHandler"/>
+                    <!-- Can alternatively hardcode username and/or password if desired -->
+                    <!--sc1:CallbackHandler name="usernameHandler" default="alice"/-->
+                    <!--sc1:CallbackHandler name="passwordHandler" default="clarinet"/-->
+                </sc1:CallbackHandlerConfiguration>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>
