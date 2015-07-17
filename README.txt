@@ -1,0 +1,1 @@
+Ejemplo de consumo de un servicio desplegado en el WSO2 AS y asegurado con UserNameToken.
